@@ -25,6 +25,6 @@ This will create a ~/.fluxbox/menu.apps file which can be included in your ~/.fl
 
 ## Caveats
 
--Submenus can only be named from the desktop entry spec "categories"
--If not using debian (the update-alternatives system) x-terminal-emulator should be changed to your favourite terminal program
--Code is old old school compact double dereference hell
+-Submenus can only be named from the desktop entry spec "categories"<br>
+-If not using debian (the update-alternatives system) x-terminal-emulator should be changed to your favourite terminal program<br>
+-Code is old old school compact double dereference hell<br>
