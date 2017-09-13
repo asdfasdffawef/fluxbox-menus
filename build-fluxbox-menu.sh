@@ -1,8 +1,8 @@
 #!/bin/sh
 # build-fluxbox-menu.sh
-# Time-stamp: <2016-12-20 15:56:46 dwight>
+# Time-stamp: <2017-04-22 18:03:59 dwight>
 #
-# Copyright © Dwight Davis <sivad_thgiwd@yahoo.ca>
+# Dwight Davis <sivad_thgiwd@yahoo.ca>
 #
 # Usage: build-fluxbox-menu.sh
 #
@@ -16,14 +16,18 @@ unset LD_PRELOAD
 unset LD_LIBRARY_PATH
 
 CONFFILE="$HOME/.fluxbox/menu.apps"
-MENULIST="Network Utility System Settings Office Graphics AudioVideo Development Math Science"
+#MENULIST="Network Utility System Settings Office Graphics AudioVideo Development Math Science"
+MENULIST="Settings Utility Development Education Graphics Network AudioVideo Office Other System Screensaver"
 DIRECTORIES="
 /usr/share/applications
+/usr/share/applications/screensavers
 $HOME/.local/share/applications"
 
 for dir in $DIRECTORIES; do
 
     for fname in "$dir"/*.desktop; do
+
+	[ -r $fname ] || continue
 
 	unset NAME TYPE EXEC COMMENT CATEGORIES TERMINAL NODISPLAY PROCESS
 
@@ -60,14 +64,18 @@ for dir in $DIRECTORIES; do
 		NoDisplay)
 		    NODISPLAY="$value"
 		    ;;
+		OnlyShowIn)
+		    ONLYSHOWIN="$value"
+		    ;;
 	    esac
 	done < $fname
 
+	CATEGORIES="${CATEGORIES:-Other;}"
 	printf "Processing $NAME ($CATEGORIES)..."
 
 	if [ "$NODISPLAY" != "true" ]; then
 	    for i in $MENULIST; do
-		if echo "$CATEGORIES" | grep "$i" > /dev/null ; then
+		if echo ";$CATEGORIES" | grep ";${i};" > /dev/null ; then
 		    eval j="\$$i"
 		    if [ "$TERMINAL" = "true" ]; then
 			j="${j}${j:+\n}  [exec] ($NAME) {x-terminal-emulator -T \"$NAME\" -e sh -c \"$EXEC\"}"
@@ -83,12 +91,12 @@ for dir in $DIRECTORIES; do
 	    printf "skipping\n"
 	fi
     done
-
-    for i in $MENULIST; do
-	eval j="\$$i"
-	printf "[submenu] ($i)\n"
-	printf "$j\n"
-	printf "[end]\n\n"
-    done > "$CONFFILE"
-
 done
+
+for i in $MENULIST; do
+    eval j="\$$i"
+    j=`echo "$j" | sort`
+    printf "[submenu] ($i)\n"
+    printf "$j\n"
+    printf "[end]\n\n"
+done > "$CONFFILE"
