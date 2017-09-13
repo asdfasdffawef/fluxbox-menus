@@ -9,9 +9,9 @@ Simply copy build-fluxbox-menu.sh to where you keep scripts
 
 Edit build-fluxbox-menu.sh. Change CONFFILE, MENULIST, and DIRECTORIES
 
-CONFFILE - is the menufile created by the script
-MENULIST - Choose what categories/submenus you want shown
-DIRECTORIES - Where to look for .desktop files
+CONFFILE - is the menufile created by the script<br>
+MENULIST - Choose what categories/submenus you want shown<br>
+DIRECTORIES - Where to look for .desktop files<br>
 
 Build the menu:
 
