@@ -19,9 +19,9 @@ Build the menu:
 
 This will create a ~/.fluxbox/menu.apps file which can be included in your ~/.fluxbox/menu file by adding;
 
-  [submenu] (Desktop Files)
-    [include] (~/.fluxbox/menu.apps)
-  [end]
+  [submenu] (Desktop Files)<br>
+    [include] (~/.fluxbox/menu.apps)<br>
+  [end]<br>
 
 ## Caveats
 
